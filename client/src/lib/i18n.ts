@@ -29,7 +29,7 @@ export const i18n = {
     },
     hero: {
       title: 'Battlefield Deployment Simulator',
-      subtitle: 'A research PoC for optimal unmanned platform positioning using weighted scoring models',
+      subtitle: 'Optimal unmanned platform positioning using weighted scoring models',
       goToDemo: 'Go to Demo',
       viewPoc: 'View PoC',
     },
