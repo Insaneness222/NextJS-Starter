@@ -146,8 +146,18 @@ export function isValidPlacement(
   facingDirection: number,
   threatRadius: number
 ): boolean {
+  const facingRad = (facingDirection * Math.PI) / 180;
+  const rightX = -Math.sin(facingRad);
+  const rightY = Math.cos(facingRad);
+
   const dx = position.x - enemyPosition.x;
   const dy = position.y - enemyPosition.y;
+
+  const rightDot = dx * rightX + dy * rightY;
+  if (rightDot > 0) {
+    return false;
+  }
+
   const distance = Math.sqrt(dx * dx + dy * dy);
 
   if (distance <= threatRadius) {
