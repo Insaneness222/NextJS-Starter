@@ -8,7 +8,7 @@ import type {
   UnitResult,
   SimulationResults,
 } from '@/types/battlefield';
-import { calculateVisibility, isInThreatCone, calculateDistance, isInFrontOfEnemy } from './raycast';
+import { calculateVisibility, isInThreatCone, calculateDistance, isValidPlacement } from './raycast';
 
 const MIN_UNIT_DISTANCE = 3;
 
@@ -132,7 +132,7 @@ function generateCandidates(grid: Grid, enemy: Enemy, samplingDensity: number, p
 
       if (cell.obstacle === 'building') continue;
 
-      if (!isInFrontOfEnemy({ x, y }, enemy.position, enemy.facingDirection)) continue;
+      if (!isValidPlacement({ x, y }, enemy.position, enemy.facingDirection, enemy.threatRadius)) continue;
 
       if (Math.random() > samplingDensity) continue;
 

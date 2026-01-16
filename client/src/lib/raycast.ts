@@ -139,3 +139,20 @@ export function isInFrontOfEnemy(
 
   return dotProduct >= 0;
 }
+
+export function isValidPlacement(
+  position: Position,
+  enemyPosition: Position,
+  facingDirection: number,
+  threatRadius: number
+): boolean {
+  const dx = position.x - enemyPosition.x;
+  const dy = position.y - enemyPosition.y;
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  if (distance <= threatRadius) {
+    return true;
+  }
+
+  return isInFrontOfEnemy(position, enemyPosition, facingDirection);
+}
