@@ -1,6 +1,6 @@
 import type { Grid, ObstacleType } from '@/types/battlefield';
 
-const GRID_WIDTH = 50;
+const GRID_WIDTH = 46;
 const GRID_HEIGHT = 30;
 
 function createEmptyGrid(): Grid {
