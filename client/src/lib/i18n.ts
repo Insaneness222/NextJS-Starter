@@ -30,7 +30,7 @@ export const i18n = {
     hero: {
       title: 'Battlefield Deployment Simulator',
       subtitle: 'Optimal unmanned platform positioning using weighted scoring models',
-      goToDemo: 'Go to Demo',
+      goToDemo: 'Run Simulator',
       viewPoc: 'View PoC',
     },
     sections: {
@@ -235,7 +235,7 @@ export const i18n = {
     hero: {
       title: '전장 배치 시뮬레이터',
       subtitle: '가중치 기반 점수 모델을 활용한 무인 플랫폼 최적 배치',
-      goToDemo: '데모 보기',
+      goToDemo: '시뮬레이터 실행',
       viewPoc: 'PoC 보기',
     },
     sections: {
