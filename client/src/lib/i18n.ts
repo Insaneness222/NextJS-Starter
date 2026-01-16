@@ -79,9 +79,9 @@ export const i18n = {
         content: 'The increasing complexity of modern battlefield environments demands intelligent decision support systems. This PoC addresses the critical need for automated position selection for unmanned platforms, reducing cognitive load on operators while improving tactical outcomes. With rising manpower constraints and the proliferation of unmanned systems, autonomous deployment preparation becomes essential for maintaining operational tempo.',
       },
       objectives: {
-        title: 'PoC Objectives',
+        title: 'Simulator Objectives',
         content: 'Demonstrate feasibility of automated position selection for three distinct platform types: Artillery units requiring standoff positions with clear firing lanes, Tank units needing hull-down defensive positions, and UGV units optimized for mobility and concealment. Each platform type has unique tactical requirements reflected in customizable weight parameters.',
-        badge: 'Implemented in Demo',
+        badge: 'Implemented in Simulator',
       },
       approach: {
         title: 'Solution Approach',
@@ -106,7 +106,7 @@ export const i18n = {
           inputs: ['Terrain grid (elevation, obstacles)', 'Enemy position and orientation', 'Platform type and count', 'Weight configuration'],
           outputs: ['Optimal positions per unit', 'Score breakdown per position', 'Top 5 candidate analysis', 'Visualization overlays'],
         },
-        badge: 'Implemented in Demo',
+        badge: 'Implemented in Simulator',
       },
       process: {
         title: 'Process',
@@ -284,9 +284,9 @@ export const i18n = {
         content: '현대 전장 환경의 복잡성 증가는 지능형 의사결정 지원 시스템을 요구합니다. 이 PoC는 무인 플랫폼의 자동 위치 선택에 대한 중요한 필요성을 다루며, 운용자의 인지 부하를 줄이면서 전술적 결과를 개선합니다. 인력 제약 증가와 무인 시스템의 확산으로 자율적 배치 준비는 작전 템포 유지에 필수적입니다.',
       },
       objectives: {
-        title: 'PoC 목표',
+        title: '시뮬레이터 목표',
         content: '세 가지 플랫폼 유형에 대한 자동 위치 선택의 타당성을 입증합니다: 명확한 사격 경로가 필요한 포병 유닛, 차체 은폐 방어 위치가 필요한 전차 유닛, 기동성과 은폐에 최적화된 UGV 유닛. 각 플랫폼 유형에는 사용자 정의 가능한 가중치 매개변수에 반영된 고유한 전술적 요구사항이 있습니다.',
-        badge: '데모에서 구현됨',
+        badge: '시뮬레이터에서 구현됨',
       },
       approach: {
         title: '솔루션 접근법',
@@ -311,7 +311,7 @@ export const i18n = {
           inputs: ['지형 그리드 (고도, 장애물)', '적 위치 및 방향', '플랫폼 유형 및 수량', '가중치 구성'],
           outputs: ['유닛별 최적 위치', '위치별 점수 분석', 'Top 5 후보 분석', '시각화 오버레이'],
         },
-        badge: '데모에서 구현됨',
+        badge: '시뮬레이터에서 구현됨',
       },
       process: {
         title: '프로세스',
