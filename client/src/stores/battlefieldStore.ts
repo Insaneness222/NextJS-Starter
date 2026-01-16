@@ -65,7 +65,7 @@ function createDefaultEnemy(): Enemy {
   return {
     position: { x: 45, y: 15 },
     facingDirection: 180,
-    threatRadius: 20,
+    threatRadius: 15,
     coneAngle: 180,
   };
 }
