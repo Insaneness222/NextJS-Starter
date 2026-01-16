@@ -8,7 +8,7 @@ import type {
   UnitResult,
   SimulationResults,
 } from '@/types/battlefield';
-import { calculateVisibility, isInThreatCone, calculateDistance } from './raycast';
+import { calculateVisibility, isInThreatCone, calculateDistance, isInFrontOfEnemy } from './raycast';
 
 const MIN_UNIT_DISTANCE = 3;
 
@@ -123,7 +123,7 @@ export function calculatePositionScore(
   };
 }
 
-function generateCandidates(grid: Grid, samplingDensity: number, placedUnits: Position[]): Position[] {
+function generateCandidates(grid: Grid, enemy: Enemy, samplingDensity: number, placedUnits: Position[]): Position[] {
   const candidates: Position[] = [];
 
   for (let y = 0; y < grid.height; y++) {
@@ -131,6 +131,8 @@ function generateCandidates(grid: Grid, samplingDensity: number, placedUnits: Po
       const cell = grid.cells[y][x];
 
       if (cell.obstacle === 'building') continue;
+
+      if (!isInFrontOfEnemy({ x, y }, enemy.position, enemy.facingDirection)) continue;
 
       if (Math.random() > samplingDensity) continue;
 
@@ -191,7 +193,7 @@ export function runSimulation(
   const placedUnits: Position[] = [];
 
   for (let i = 0; i < unitCount; i++) {
-    const candidates = generateCandidates(grid, samplingDensity, placedUnits);
+    const candidates = generateCandidates(grid, enemy, samplingDensity, placedUnits);
     if (candidates.length === 0) break;
 
     const { best, top5 } = selectBestPosition(
@@ -252,7 +254,7 @@ export function runSimulationStep(
   samplingDensity: number,
   useDistanceAttenuation: boolean
 ): UnitResult | null {
-  const candidates = generateCandidates(grid, samplingDensity, placedUnits);
+  const candidates = generateCandidates(grid, enemy, samplingDensity, placedUnits);
   if (candidates.length === 0) return null;
 
   const { best, top5 } = selectBestPosition(

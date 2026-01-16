@@ -122,3 +122,20 @@ export function calculateDistance(a: Position, b: Position): number {
   const dy = a.y - b.y;
   return Math.sqrt(dx * dx + dy * dy);
 }
+
+export function isInFrontOfEnemy(
+  position: Position,
+  enemyPosition: Position,
+  facingDirection: number
+): boolean {
+  const facingRad = (facingDirection * Math.PI) / 180;
+  const facingX = Math.cos(facingRad);
+  const facingY = Math.sin(facingRad);
+
+  const dx = position.x - enemyPosition.x;
+  const dy = position.y - enemyPosition.y;
+
+  const dotProduct = dx * facingX + dy * facingY;
+
+  return dotProduct >= 0;
+}
