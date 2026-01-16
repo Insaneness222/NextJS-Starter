@@ -1,0 +1,250 @@
+PROJECT GOAL
+Create a fully runnable Next.js + TypeScript web app that demonstrates a research PoC: a 2D battlefield deployment simulator for multiple unmanned platforms (Artillery, Tank, UGV). The system selects and disperses optimal positions based on terrain/obstacles/threat using a weighted scoring model. The Demo page is the core deliverable.
+
+TECH STACK (MANDATORY)
+- Next.js (App Router)
+- TypeScript
+- TailwindCSS
+- State management: Zustand
+- Rendering: HTML Canvas (preferred)
+- Charts (optional): recharts
+- Dark mode
+- Fully client-side (no backend required)
+
+LANGUAGE REQUIREMENT (MANDATORY) — BILINGUAL UI
+- Implement bilingual UI support: English (default) + Korean.
+- Add a global language toggle in the top navigation: “EN | KR”.
+- Switching language must update all visible text immediately without page reload.
+- Do NOT hardcode user-facing strings inside components.
+- Centralize all UI strings in a dictionary file and access via a helper hook/function.
+- All user-facing text must be bilingual, including:
+  navigation, headings, buttons, descriptions, tooltips, demo onboarding/tutorial, preset names, results labels, score breakdown labels.
+
+Implement centralized i18n:
+- Create: /lib/i18n.ts exporting i18n dictionary:
+  i18n.en = {...}, i18n.ko = {...}
+- Create: a global language store in Zustand with:
+  language: "en" | "ko"
+  setLanguage(lang)
+  Optional: persist to localStorage.
+
+PoC content must be fully bilingual: show English paragraphs when EN, Korean paragraphs when KR. Do not mix languages in the same paragraph.
+
+REQUIRED Korean translation for the Demo “Edit Mode” UI text (must match exactly):
+편집 모드
+특정 전장 지형을 가정하여 장애물을 직접 생성하거나 수정할 수 있습니다
+(선택 사항 — 프리셋 및 랜덤 지형도 함께 사용할 수 있습니다)
+
+ROUTING & FILE STRUCTURE (REQUIRED)
+Create the following structure:
+
+/app
+  /page.tsx          -> Overview page (description only)
+  /poc/page.tsx      -> PoC document page (no support/resources section)
+  /demo/page.tsx     -> Main 2D battlefield demo
+
+/components
+  /layout
+    TopNav.tsx
+    LanguageToggle.tsx
+  /demo
+    MapCanvas.tsx
+    Toolbar.tsx
+    ControlPanel.tsx
+    ResultsPanel.tsx
+    EditTools.tsx
+
+/lib
+  i18n.ts
+  presets.ts
+  scoring.ts
+  grid.ts
+  raycast.ts
+  exportImport.ts
+
+/types
+  battlefield.ts
+
+Make code modular and readable. Avoid placeholder components.
+
+GLOBAL LAYOUT
+- Use a consistent top navigation on all pages: Overview / PoC / Demo (bilingual labels).
+- Include LanguageToggle in the top navigation.
+- Provide dark mode styling (Tailwind) across the site.
+
+PAGE REQUIREMENTS
+
+1) OVERVIEW PAGE (/)
+Do NOT embed the demo here. Overview must be descriptive and polished.
+Include:
+- Hero title + subtitle (bilingual) and two CTA buttons:
+  - Go to Demo
+  - View PoC
+- Sections (bilingual):
+  - Problem (motivation: manpower shortage, autonomous preparation)
+  - Core Idea (4-step pipeline diagram: Terrain -> Candidates -> Scoring -> Deployment)
+  - Platform Differences (3 cards: Artillery, Tank, UGV)
+  - What the Demo Can Do (feature cards: Presets, Randomize, Manual Editing, Weights, Top5, Export/Import)
+
+2) PoC PAGE (/poc)
+Document-style page in accordion or tabs. Include ONLY these sections (bilingual):
+1. Background and Motivation
+2. PoC Objectives (by platform)
+3. Solution Approach
+   - Position selection criteria
+   - Weighted reward function concept (table)
+   - Input / Output definition
+4. Process (5-step timeline UI)
+5. Expected Outcomes (tactical/technical/extendability)
+
+IMPORTANT: Do NOT include any “Support/Resources/지원사항” section.
+Add small “Implemented in Demo” badges/labels where relevant (bilingual).
+
+3) DEMO PAGE (/demo) — CORE DELIVERABLE
+
+3.1 Layout
+- Left 70%: Map Canvas
+- Right 30%: Control Panel + Results
+- Top Toolbar (bilingual labels):
+  - Run
+  - Step
+  - Reset
+  - Preset selector
+  - Randomize button
+  - Edit Mode toggle
+  - Export JSON / Import JSON
+
+3.2 Battlefield Grid Model
+- Grid size: 50 x 30
+- Each cell:
+  - elevation: number
+  - obstacle: "none" | "building" | "forest" | "hill"
+- Enemy state:
+  - position (x,y)
+  - facing direction (for threat cone)
+  - threat radius or cone params
+
+3.3 Obstacle / Terrain Generation (IMPLEMENT ALL THREE)
+A) Preset Mode (automatic)
+Implement presets (bilingual names):
+- Open Field
+- Dense Obstacles
+- Mixed
+- Ridge / Valley
+Each preset must initialize elevation + obstacles and be runnable immediately.
+
+B) Randomize Mode
+- “Randomize Map” button
+- Perturb obstacle positions and elevation values while keeping the selected preset’s overall style.
+- Optional: show seed and allow “lock seed”.
+
+C) Manual Edit Mode (user drawing)
+When Edit Mode ON:
+- Allow canvas mouse editing:
+  - Draw obstacles with a brush
+  - Erase obstacles
+- EditTools panel:
+  - Brush size slider (1–5)
+  - Obstacle type selector: Building / Forest / Hill
+  - Eraser tool
+- Allow dragging enemy position.
+- Optional: allow dragging friendly start positions.
+
+REQUIRED UI TEXT ON THE DEMO PAGE (BILINGUAL):
+- English:
+  Edit Mode
+  Create or modify obstacles manually to simulate specific battlefield layouts
+  (Optional — presets and random maps are also available)
+- Korean: must exactly match:
+  편집 모드
+  특정 전장 지형을 가정하여 장애물을 직접 생성하거나 수정할 수 있습니다
+  (선택 사항 — 프리셋 및 랜덤 지형도 함께 사용할 수 있습니다)
+
+3.4 Line-of-Sight (LoS) / Exposure Model
+Implement grid raycasting using Bresenham in /lib/raycast.ts.
+Rules:
+- Building blocks LoS completely.
+- Forest attenuates LoS (e.g., multiply by 0.6 per forest cell intersected; keep it simple and stable).
+- Hill affects elevation advantage; LoS blocking by hill is optional (if too complex, skip hill blocking and use hill only for elevation/cover scoring).
+Provide toggles (bilingual):
+- LoS On/Off
+- Threat Cone On/Off
+- Distance Attenuation On/Off
+
+3.5 Scoring Function (platform-specific weights)
+Implement in /lib/scoring.ts:
+score =
+  w_vis * FriendlyToEnemyVisibility
+- w_exp * EnemyToFriendlyExposure
++ w_cov * CoverScore
++ w_ele * ElevationAdvantage
++ w_mob * MobilityScore
+- w_sep * SeparationPenalty
+
+Provide platform templates (bilingual) that set default weights:
+- Artillery Template (prioritize open space / distance / mobility; lower exposure concern)
+- Tank Template (prioritize low exposure / cover / good LoS)
+- UGV Template (balance mobility + cover + repositioning)
+Also provide Custom mode with sliders (0–1) for each weight.
+
+3.6 Multi-Unit Deployment Algorithm
+Implement:
+- Candidate generation: all walkable cells or sampled cells (add a sampling density slider).
+- Two execution modes:
+  - One-shot Solve: compute and place all units at once.
+  - Step-by-step: place units sequentially and visualize placement per step.
+Constraints:
+- Minimum distance between units (avoid clustering/collision).
+- Diversity penalty to avoid selecting identical top spots.
+Show selected positions with distinct icons/colors per platform.
+
+3.7 Results Panel (analysis-heavy, bilingual)
+Display:
+- Final selected position and total score per unit.
+- Top 5 candidate positions per unit with score breakdown:
+  vis / exposure / cover / elevation / mobility / separation.
+- Summary metrics:
+  - Average exposure
+  - Average visibility
+  - Minimum inter-unit distance
+  - Total score
+Optional: a chart (recharts) for score breakdown by platform.
+
+3.8 Export / Import (reproducibility)
+Implement in /lib/exportImport.ts:
+- Export JSON containing:
+  - grid elevation
+  - obstacles
+  - enemy state
+  - unit configuration (counts/types/optional starts)
+  - current weights/templates
+  - current results (selected positions)
+- Import JSON to fully restore state.
+Provide UI buttons: Export JSON / Import JSON.
+
+3.9 Onboarding Tutorial (bilingual)
+On first visit to /demo, show an overlay with 3–5 steps:
+1) Select preset or Randomize
+2) (Optional) Edit obstacles
+3) Adjust weights / templates
+4) Run or Step
+5) Inspect results / Export
+Must switch language based on toggle. Optional: remember dismissed state per session.
+
+QUALITY REQUIREMENTS
+- The demo must feel like a research PoC tool, not a toy.
+- Keep logic modular, avoid duplicating components per language.
+- Use i18n dictionary for ALL UI text.
+- Ensure responsiveness and good spacing; use cards, tooltips, and clear typography.
+- Provide stable performance; avoid extremely heavy computations.
+
+README (REQUIRED)
+Create README.md explaining:
+- How to run the project
+- How to use the demo (presets, randomize, edit mode, run/step)
+- Scoring formula and what each term means
+- LoS raycast logic (pseudocode)
+- Future extensions: multi-threat, dynamic repositioning, optimization/RL
+
+FINAL OUTPUT
+Produce a fully runnable project that satisfies every requirement above.
