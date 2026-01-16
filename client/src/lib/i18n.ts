@@ -79,7 +79,7 @@ export const i18n = {
         content: 'The increasing complexity of modern battlefield environments demands intelligent decision support systems. This PoC addresses the critical need for automated position selection for unmanned platforms, reducing cognitive load on operators while improving tactical outcomes. With rising manpower constraints and the proliferation of unmanned systems, autonomous deployment preparation becomes essential for maintaining operational tempo.',
       },
       objectives: {
-        title: 'Simulator Objectives',
+        title: 'PoC Objectives',
         content: 'Demonstrate feasibility of automated position selection for three distinct platform types: Artillery units requiring standoff positions with clear firing lanes, Tank units needing hull-down defensive positions, and UGV units optimized for mobility and concealment. Each platform type has unique tactical requirements reflected in customizable weight parameters.',
         badge: 'Implemented in Simulator',
       },
@@ -284,7 +284,7 @@ export const i18n = {
         content: '현대 전장 환경의 복잡성 증가는 지능형 의사결정 지원 시스템을 요구합니다. 이 PoC는 무인 플랫폼의 자동 위치 선택에 대한 중요한 필요성을 다루며, 운용자의 인지 부하를 줄이면서 전술적 결과를 개선합니다. 인력 제약 증가와 무인 시스템의 확산으로 자율적 배치 준비는 작전 템포 유지에 필수적입니다.',
       },
       objectives: {
-        title: '시뮬레이터 목표',
+        title: 'PoC 목표',
         content: '세 가지 플랫폼 유형에 대한 자동 위치 선택의 타당성을 입증합니다: 명확한 사격 경로가 필요한 포병 유닛, 차체 은폐 방어 위치가 필요한 전차 유닛, 기동성과 은폐에 최적화된 UGV 유닛. 각 플랫폼 유형에는 사용자 정의 가능한 가중치 매개변수에 반영된 고유한 전술적 요구사항이 있습니다.',
         badge: '시뮬레이터에서 구현됨',
       },
