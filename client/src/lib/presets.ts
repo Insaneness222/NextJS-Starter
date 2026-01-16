@@ -37,8 +37,8 @@ export function generateDenseObstacles(): Grid {
   for (let y = 0; y < GRID_HEIGHT; y++) {
     for (let x = 0; x < GRID_WIDTH; x++) {
       if (Math.random() < 0.08) {
-        const types: ObstacleType[] = ['building', 'forest', 'hill'];
-        cells[y][x].obstacle = types[Math.floor(Math.random() * 3)];
+        const types: ObstacleType[] = ['forest', 'hill'];
+        cells[y][x].obstacle = types[Math.floor(Math.random() * 2)];
       }
       cells[y][x].elevation = Math.sin(x * 0.2) * Math.cos(y * 0.2) * 3;
     }
