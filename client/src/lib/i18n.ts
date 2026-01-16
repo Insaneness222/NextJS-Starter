@@ -234,7 +234,7 @@ export const i18n = {
     },
     hero: {
       title: '전장 배치 시뮬레이터',
-      subtitle: '가중치 기반 점수 모델을 활용한 무인 플랫폼 최적 배치 연구 PoC',
+      subtitle: '가중치 기반 점수 모델을 활용한 무인 플랫폼 최적 배치',
       goToDemo: '데모 보기',
       viewPoc: 'PoC 보기',
     },
