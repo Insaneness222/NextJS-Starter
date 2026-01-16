@@ -116,7 +116,7 @@ interface BattlefieldState {
 export const useBattlefieldStore = create<BattlefieldState>((set, get) => ({
   grid: createEmptyGrid(),
   enemy: createDefaultEnemy(),
-  friendlyStart: { x: 5, y: 15 },
+  friendlyStart: { x: 0, y: 15 },
   platformType: 'tank',
   weights: { ...defaultWeights.tank },
   unitCount: 3,
