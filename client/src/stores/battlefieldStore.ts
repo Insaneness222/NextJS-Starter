@@ -174,7 +174,7 @@ export const useBattlefieldStore = create<BattlefieldState>((set, get) => ({
       case 'denseObstacles':
         for (let y = 0; y < GRID_HEIGHT; y++) {
           for (let x = 0; x < GRID_WIDTH; x++) {
-            if (Math.random() < 0.08) {
+            if (Math.random() < 0.10) {
               const types: ObstacleType[] = ['forest', 'hill'];
               cells[y][x].obstacle = types[Math.floor(Math.random() * 2)];
             }
