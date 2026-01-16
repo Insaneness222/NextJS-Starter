@@ -25,7 +25,7 @@ export const i18n = {
     nav: {
       overview: 'Overview',
       poc: 'PoC',
-      demo: 'Demo',
+      demo: 'Simulator',
     },
     hero: {
       title: 'Battlefield Deployment Simulator',
@@ -230,7 +230,7 @@ export const i18n = {
     nav: {
       overview: '개요',
       poc: 'PoC',
-      demo: '데모',
+      demo: '시뮬레이터',
     },
     hero: {
       title: '전장 배치 시뮬레이터',
